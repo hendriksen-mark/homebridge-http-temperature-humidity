@@ -1,29 +1,62 @@
 {
-  "name": "homebridge-advanced-http-temperature-humidity",
-  "version": "1.0.3",
-  "description": "Plugin to display temperature and humidity via http in homebridge",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "homebridge-http-temperature-humidity",
+  "displayName": "http-temperature-humidity",
+  "version": "2.0.0",
+  "description": "HTTP temperature and humidity sensor for Homebridge",
+  "license": "ISC",
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge-accessory",
+    "temperature",
+    "humidity"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ingowalther/homebridge-advanced-http-temperature-humidity.git"
+    "url": "https://github.com/hendriksen-mark/homebridge-http-temperature-humidity"
   },
-  "keywords": [
-    "homebridge-plugin"
-  ],
-  "author": "Ingo Walther",
-  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ingowalther/homebridge-advanced-http-temperature-humidity/issues"
+    "url": "https://github.com/hendriksen-mark/homebridge-http-temperature-humidity/issues"
   },
-  "homepage": "https://github.com/ingowalther/homebridge-advanced-http-temperature-humidity#readme",
   "engines": {
-    "node": ">=0.12.0",
-    "homebridge": ">=0.2.0"
+    "node": "^18.20.4 || ^20.15.1 || ^22.0.0",
+    "homebridge": "^1.6.0 || ^2.0.0-beta.0"
+  },
+  "author": {
+    "name": "Mark Hendriksen"
   },
   "dependencies": {
-    "request": "^2.65.0"
+    "homebridge-http-utils": "github:hendriksen-mark/homebridge-http-utils"
+  },
+  "devDependencies": {
+    "homebridge": "^2.0.0-beta.29",
+    "semantic-release": "24.2.5",
+    "nodemon": "3.1.10",
+    "homebridge-config-ui-x":"^v5.0.0-beta.87",
+    "eslint": "^9.28.0",
+    "@eslint/js": "^9.28.0",
+    "@typescript-eslint/eslint-plugin": "^8.33.1",
+    "@typescript-eslint/parser": "^8.33.1",
+    "rimraf": "^6.0.1"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release",
+    "lint": "eslint --max-warnings=0",
+    "lint:fix": "eslint --fix --max-warnings=0 .",
+    "watch": "nodemon",
+    "build": "rimraf ./dist && tsc && npm link",
+    "prepublishOnly": "npm run lint && npm run build"
+  },
+  "main": "dist/src/index.js",
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "ignore": [],
+    "exec": "npm run build && DEBUG= node ./node_modules/homebridge-config-ui-x/dist/bin/hb-service.js run --stdout -U ./test/hbConfig -D -I | tee -a ./test/hbConfig/homebridge.log",
+    "signal": "SIGTERM",
+    "env": {
+      "NODE_OPTIONS": "--trace-warnings"
+    }
   }
 }

@@ -1,0 +1,38 @@
+{
+    "bridge": {
+        "name": "Homebridge",
+        "username": "AA:BB:CC:DD:EE:01",
+        "port": 51826,
+        "pin": "031-45-154"
+    },
+    "description": "HomeBridge HTTP Status Control",
+    "plugins": [
+        "homebridge-http-temperature-humidity",
+        "homebridge-config-ui-x"
+    ],
+    "platforms": [
+        {
+            "name": "Config",
+            "port": 8581,
+            "auth": "none",
+            "theme": "orange",
+            "lightingMode": "auto",
+            "menuMode": "default",
+            "tempUnits": "c",
+            "lang": "auto",
+            "platform": "config"
+        }
+    ],
+    "accessories": [
+        {
+            "accessory": "HttpTemperatureHumidity",
+            "name": "TemperatureHumidity Badkamer",
+            "url": {
+                "url": "http://192.168.1.236/dht",
+                "sendimmediately": "",
+                "http_method": "GET"
+            },
+            "pullInterval": 5000
+        }
+    ]
+}
