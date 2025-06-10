@@ -13,14 +13,14 @@
 |-----------------|------------------------------------------------------------|-------------------------|----------|
 | url             | The url to fetch temperature (and humidity)                | /                       | true     |
 | http_method     | The http method                                            | GET                     | false    |
-| sendimmediately | see https://github.com/request/request#http-authentication | false                   | false    |
 | username        | Username for http-authentication                           | /                       | false    |
 | password        | Password for http-authentication                           | /                       | false    |
 | name            | Name of the homekit accessory                              | /                       | true     |
-| manufacturer    | Name of the manufacturer of the accessory                  | HttpTemperatureHumidity | false    |
+| manufacturer    | Name of the manufacturer of the accessory                  | Mark Hendriksen         | false    |
 | model           | Name of the model of the accessory                         | Default                 | false    |
-| serial          | Serial of the accessory                                    | 18981898                | false    |
+| serial          | Serial of the accessory                                    | "18981898"              | false    |
 | disableHumidity | Should humidity be disabled?                               | false                   | false    |
+| pullInterval    | Interval in milliseconds to pull temperature and humidity  |                         | false    |
 
 ### Example Config
 
@@ -39,9 +39,21 @@
 
   "accessories": [
     {
-      "accessory": "AdvancedHttpTemperatureHumidity",
-      "name": "Temperature and Humidity",
-      "url": "http://192.168.178.210/temp/status"
+      "name": "TemperatureHumidity",
+      "url": {
+          "url": "http://my-sensor.local/api/v1/temperature-humidity",
+          "http_method": "GET",
+          "auth": {
+            "username": "",
+            "password": ""
+          }
+      },
+      "manufacturer": "Mark Hendriksen",
+      "model": "Default",
+      "pullInterval": 5000,
+      "serial": "18981898",
+      "disableHumidity": false,
+      "accessory": "HttpTemperatureHumidity",
     }
   ]
 }

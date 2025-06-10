@@ -1,0 +1,122 @@
+{
+	"pluginAlias": "HttpTemperatureHumidity",
+	"pluginType": "accessory",
+	"singular": false,
+	"schema": {
+		"type": "object",
+		"properties": {
+			"name": {
+				"title": "Name",
+				"type": "string",
+				"required": true,
+				"default": "My Temperature and Humidity Sensor"
+			},
+			"url": {
+				"type": "object",
+				"title": "Get Current Temperature and Humidity URL",
+				"properties": {
+					"url": {
+						"type": "string",
+						"title": "URL",
+						"required": true,
+						"placeholder": "http://my-sensor.local/api/v1/temperature-humidity",
+						"format": "uri"
+					},
+					"method": {
+						"type": "string",
+						"default": "GET",
+						"enum": [
+							"GET",
+							"PUT",
+							"POST",
+							"DELETE",
+							"HEAD"
+						]
+					},
+					"body": {
+						"type": "string"
+					}
+				}
+			},
+			"auth": {
+        "title": "HTTP Authentication",
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        }
+      },
+			"pullInterval": {
+				"title": "Pull interval [ms]",
+				"type": "integer",
+				"description": "Interval in milliseconds to pull temperature and humidity data from the sensor periodically.",
+				"minimum": 0
+			},
+			"manufacturer": {
+				"title": "Manufacturer",
+				"type": "string",
+				"description": "Manufacturer of the sensor."
+			},
+			"model": {
+				"title": "Model",
+				"type": "string",
+				"description": "Model of the sensor."
+			},
+			"serial": {
+				"title": "Serial Number",
+				"type": "string",
+				"description": "Serial number of the sensor."
+			},
+			"disableHumidity": {
+				"title": "Disable Humidity",
+				"type": "boolean",
+				"description": "If enabled, the humidity sensor will not be created."
+			}
+		}
+	},
+	"layout": [
+		{
+			"type": "flex",
+			"flex-flow": "row wrap",
+			"items": [
+				"name"
+			]
+		},
+		"url.url",
+		"url.method",
+		"url.body",
+		{
+      "type": "fieldset",
+      "title": "HTTP Authentication",
+      "expandable": true,
+      "flex-flow": "column wrap",
+      "displayFlex": true,
+      "flex-direction": "column",
+      "items": [
+        "url.auth.username",
+        "url.auth.password"
+      ]
+    },
+		 {
+      "type": "fieldset",
+      "title": "Advanced",
+      "expandable": true,
+      "flex-flow": "column wrap",
+      "displayFlex": true,
+      "flex-direction": "column",
+      "items": [
+        "manufacturer",
+        "model",
+        "serial",
+        "disableHumidity",
+        "pullInterval"
+      ]
+    }
+	]
+}

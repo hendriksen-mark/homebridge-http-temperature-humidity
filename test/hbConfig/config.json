@@ -28,9 +28,8 @@
             "accessory": "HttpTemperatureHumidity",
             "name": "TemperatureHumidity Badkamer",
             "url": {
-                "url": "http://192.168.1.236/dht",
-                "sendimmediately": "",
-                "http_method": "GET"
+                "url": "http://localhost:8000",
+                "method": "GET"
             },
             "pullInterval": 5000
         }

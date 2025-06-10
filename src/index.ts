@@ -183,7 +183,17 @@ class HttpTemperatureHumidity {
         this.log.error('getTemperatureAndHumidity() returned http error: %s', response.status);
         throw new Error('Got http error code ' + response.status);
       }
-      let body = JSON.parse(response.data);
+
+      // Fix: handle both string and object response.data
+      let body: any;
+      if (typeof response.data === 'string') {
+        body = JSON.parse(response.data);
+      } else if (typeof response.data === 'object' && response.data !== null) {
+        body = response.data;
+      } else {
+        throw new Error('Response data is not valid JSON or object');
+      }
+
       let temperature = parseFloat(body.temperature);
       let humidity = parseFloat(body.humidity);
       this.log.info('Current temperature (retrieved via http): %s°C', temperature);
